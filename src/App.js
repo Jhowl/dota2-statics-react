@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Space, Spin, Statistic } from 'antd';
+import { Space, Spin, ConfigProvider, theme } from 'antd';
+
 
 import LeaguesSelect from './components/leagues';
 import TeamsSelect from './components/teams';
@@ -41,6 +42,11 @@ const App = () => {
   }
 
   return (
+    <ConfigProvider
+    theme={{
+      algorithm: theme.darkAlgorithm,
+    }}
+  >
     <div className="Statistics">
        <Space
         style={{
@@ -54,6 +60,7 @@ const App = () => {
       <Statistics />
       <MatchesTable />
     </div>
+    </ConfigProvider>
   )
 };
 

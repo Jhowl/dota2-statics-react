@@ -100,9 +100,11 @@ const calculateStatistics = (array) => {
   };
 
   const mode = (array) => {
-    return array.sort((a, b) =>
-      array.filter(v => v === a).length
-      - array.filter(v => v === b).length
+    const newArray = [...array]
+
+    return newArray.sort((a, b) =>
+      newArray.filter(v => v === a).length
+      - newArray.filter(v => v === b).length
     ).pop();
   };
 
@@ -171,6 +173,7 @@ const calculateStatistics = (array) => {
   };
 
   const standardDeviationbyTime = (array) => {
+    console.log(array)
     const times = array.reduce((acc, curr) => {
       acc.thirty = curr < 1800 ? acc.thirty + 1 : acc.thirty;
       acc.thirtyTwo = curr < 1920 ? acc.thirtyTwo + 1 : acc.thirtyTwo;

@@ -31,7 +31,9 @@ const Statistics = () => {
     <div style={{ padding: '20px' }}>
       <Row gutter={[16, 16]}>
         <Col span={12}>
-          <Card title="Duration Statistics">
+          <Card title="Duration Statistics"
+            colorBgContainer="#f0f2f5"
+          >
             <ul>
               <li>Min: {convertSecondsToTime(durationStatistics.min)}</li>
               <li>Max: {convertSecondsToTime(durationStatistics.max)}</li>
@@ -98,7 +100,6 @@ const Statistics = () => {
           </Card>
         </Col>
       </Row>
-      {/* rest of the code */}
     </div>
   );
 };
