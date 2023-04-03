@@ -1,12 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
-import leagguesReducer from '../features/leagues/leaguesSlice';
+import leagguesReducer from './leaguesSlice';
 import teamsReducer from '../features/teams/teamsSlice';
-import matchesReducer from '../features/matches/matchesSlice';
+import matchesReducer from './matchesSlice';
+import heroesReducer from './heroesSlice';
 
 export const store = configureStore({
   reducer: {
     leagues: leagguesReducer,
     teams: teamsReducer,
-    matches: matchesReducer
+    matches: matchesReducer,
+    heroes: heroesReducer
   }
 })

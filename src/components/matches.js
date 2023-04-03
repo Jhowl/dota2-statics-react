@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { selectAllMatches, fetchMatches } from "../features/matches/matchesSlice";
+import { selectAllMatches, fetchMatches } from "../redux/matchesSlice";
 import { Table, Tag } from 'antd';
 
 const MatchesTable = () => {
@@ -51,12 +51,12 @@ const MatchesTable = () => {
     },
     {
       title: 'Winner',
-      dataIndex: 'radiant_win',
-      key: 'radiant_win',
-      render: (radiant_win) => (
+      dataIndex: 'team_win',
+      key: 'team_win',
+      render: (team_win) => (
         <span>
-          <Tag color={radiant_win ? 'green' : 'red'}>
-            {radiant_win ? 'Radiant' : 'Dire'}
+          <Tag color='green'>
+            {team_win}
           </Tag>
         </span>
       ),
@@ -78,7 +78,11 @@ const MatchesTable = () => {
     },
   ];
 
-  const data = matches.map((match) => ({ ...match, key: match.match_id }));
+  const data = matches.map((match) => ({
+    ...match,
+    key: match.match_id,
+    team_win: match.radiant_win ? match.radiant_name : match.dire_name,
+  }));
 
   return (
     <div>

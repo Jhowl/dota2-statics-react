@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { leagues } from './requests';
+import { leagues } from '../requests/leaguesRequests';
 
 const initialState = {
   leagues: [],

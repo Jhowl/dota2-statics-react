@@ -2,19 +2,19 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { Select } from 'antd';
 
-import { selectAllLeagues, fetchLeagues } from "../redux/leaguesSlice";
+import { selectAllHeroes, fetchHeroes } from "../redux/heroesSlice";
 
-const LeaguesSelect = ({ onLeagueChange }) => {
+const HeroesSelect = ({ onHeroChange }) => {
   const dispatch = useDispatch();
-  const { leagues, loading, error } = useSelector(selectAllLeagues);
+  const { heroes, loading, error } = useSelector(selectAllHeroes);
 
   useEffect(() => {
-      dispatch(fetchLeagues());
+      dispatch(fetchHeroes());
   }, [dispatch]);
 
   return (
     <div style={{ marginLeft: 60}}>
-      <h1>Leagues</h1>
+      <h1>Heroes</h1>
       {loading && <p>Loading...</p>}
       <div style={{ marginBottom: 16, marginTop: 16 }}>
         <Select
@@ -25,9 +25,9 @@ const LeaguesSelect = ({ onLeagueChange }) => {
             option.label.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1
           }
           style={{ width: '50%' }}
-          onChange={onLeagueChange}
-          placeholder="Select a league"
-          options={leagues.map((league) => ({ value: league.leagueid, label: league.name }))}
+          onChange={onHeroChange}
+          placeholder="Select a hero"
+          options={heroes.map((hero) => ({ value: hero.id, label: hero.localized_name }))}
           >
         </Select>
       </div>
@@ -37,4 +37,4 @@ const LeaguesSelect = ({ onLeagueChange }) => {
   );
 }
 
-export default LeaguesSelect
+export default HeroesSelect

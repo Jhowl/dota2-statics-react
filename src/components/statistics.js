@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from "react-redux";
 import { Card, Col, Row } from 'antd';
 import calculateStatistics from '../utils/statistics'
-import { selectAllMatches } from '../features/matches/matchesSlice';
-
+import { selectAllMatches } from '../redux/matchesSlice';
 
 const Statistics = () => {
   const [durationStatistics, setDurationStatistics] = useState({});
@@ -31,9 +30,7 @@ const Statistics = () => {
     <div style={{ padding: '20px' }}>
       <Row gutter={[16, 16]}>
         <Col span={12}>
-          <Card title="Duration Statistics"
-            colorBgContainer="#f0f2f5"
-          >
+          <Card title="Duration Statistics">
             <ul>
               <li>Min: {convertSecondsToTime(durationStatistics.min)}</li>
               <li>Max: {convertSecondsToTime(durationStatistics.max)}</li>
@@ -46,7 +43,7 @@ const Statistics = () => {
               <li>
                 standardDeviation:
                 <ul>
-                  <li> 30m: {durationStatistics.standardDeviationbyTime?.thirty} %</li>
+                  <li> 30m :{durationStatistics.standardDeviationbyTime?.thirty} %</li>
                   <li> 32m: {durationStatistics.standardDeviationbyTime?.thirtyTwo} %</li>
                   <li> 34m: {durationStatistics.standardDeviationbyTime?.thirtyFour} %</li>
                   <li> 36m: {durationStatistics.standardDeviationbyTime?.thirtySix} %</li>
@@ -54,7 +51,16 @@ const Statistics = () => {
                   <li> 40m: {durationStatistics.standardDeviationbyTime?.forty} %</li>
                   <li> 42m: {durationStatistics.standardDeviationbyTime?.fortyTwo} %</li>
                   <li> 44m: {durationStatistics.standardDeviationbyTime?.fortyFour} %</li>
-                  </ul>
+                  <li>
+                    <span>
+                      The formula for the time is "time &lt; 1800" for 30m
+                    </span>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href={durationStatistics.generateLinkWolfram} target="_blank" rel="noreferrer noopener">
+                  View on Wolfram Alpha</a>
               </li>
             </ul>
           </Card>
@@ -73,28 +79,32 @@ const Statistics = () => {
               <li>
                 standardDeviation:
                 <ul>
-                  <li> 30: {scoreStatistics.standardDeviationbyScore?.thirty} %</li>
-                  <li> 32: {scoreStatistics.standardDeviationbyScore?.thirtyTwo} %</li>
-                  <li> 34: {scoreStatistics.standardDeviationbyScore?.thirtyFour} %</li>
-                  <li> 36: {scoreStatistics.standardDeviationbyScore?.thirtySix} %</li>
-                  <li> 38: {scoreStatistics.standardDeviationbyScore?.thirtyEight} %</li>
-                  <li> 40: {scoreStatistics.standardDeviationbyScore?.forty} %</li>
-                  <li> 42: {scoreStatistics.standardDeviationbyScore?.fortyTwo} %</li>
-                  <li> 44: {scoreStatistics.standardDeviationbyScore?.fortyFour} %</li>
-                  <li> 46: {scoreStatistics.standardDeviationbyScore?.fortySix} %</li>
-                  <li> 48: {scoreStatistics.standardDeviationbyScore?.fortyEight} %</li>
-                  <li> 50: {scoreStatistics.standardDeviationbyScore?.fifty} %</li>
-                  <li> 52: {scoreStatistics.standardDeviationbyScore?.fiftyTwo} %</li>
-                  <li> 54: {scoreStatistics.standardDeviationbyScore?.fiftyFour} %</li>
-                  <li> 56: {scoreStatistics.standardDeviationbyScore?.fiftySix} %</li>
-                  <li> 58: {scoreStatistics.standardDeviationbyScore?.fiftyEight} %</li>
-                  <li> 60: {scoreStatistics.standardDeviationbyScore?.sixty} %</li>
-                  <li> 62: {scoreStatistics.standardDeviationbyScore?.sixtyTwo} %</li>
-                  <li> 64: {scoreStatistics.standardDeviationbyScore?.sixtyFour} %</li>
-                  <li> 66: {scoreStatistics.standardDeviationbyScore?.sixtySix} %</li>
-                  <li> 68: {scoreStatistics.standardDeviationbyScore?.sixtyEight} %</li>
-                  <li> 70: {scoreStatistics.standardDeviationbyScore?.seventy} %</li>
+                  <li> Less 30.5: {scoreStatistics.standardDeviationbyScore?.thirty} %</li>
+                  <li> Less 32.5: {scoreStatistics.standardDeviationbyScore?.thirtyTwo} %</li>
+                  <li> Less 34.5: {scoreStatistics.standardDeviationbyScore?.thirtyFour} %</li>
+                  <li> Less 36.5: {scoreStatistics.standardDeviationbyScore?.thirtySix} %</li>
+                  <li> Less 38.5: {scoreStatistics.standardDeviationbyScore?.thirtyEight} %</li>
+                  <li> Less 40.5: {scoreStatistics.standardDeviationbyScore?.forty} %</li>
+                  <li> Less 42.5: {scoreStatistics.standardDeviationbyScore?.fortyTwo} %</li>
+                  <li> Less 44.5: {scoreStatistics.standardDeviationbyScore?.fortyFour} %</li>
+                  <li> Less 46.5: {scoreStatistics.standardDeviationbyScore?.fortySix} %</li>
+                  <li> Less 48.5: {scoreStatistics.standardDeviationbyScore?.fortyEight} %</li>
+                  <li> Less 50.5: {scoreStatistics.standardDeviationbyScore?.fifty} %</li>
+                  <li> Less 52.5: {scoreStatistics.standardDeviationbyScore?.fiftyTwo} %</li>
+                  <li> Less 54.5: {scoreStatistics.standardDeviationbyScore?.fiftyFour} %</li>
+                  <li> Less 56.5: {scoreStatistics.standardDeviationbyScore?.fiftySix} %</li>
+                  <li> Less 58.5: {scoreStatistics.standardDeviationbyScore?.fiftyEight} %</li>
+                  <li> Less 60.5: {scoreStatistics.standardDeviationbyScore?.sixty} %</li>
+                  <li> Less 62.5: {scoreStatistics.standardDeviationbyScore?.sixtyTwo} %</li>
+                  <li> Less 64.5: {scoreStatistics.standardDeviationbyScore?.sixtyFour} %</li>
+                  <li> Less 66.5: {scoreStatistics.standardDeviationbyScore?.sixtySix} %</li>
+                  <li> Less 68.5: {scoreStatistics.standardDeviationbyScore?.sixtyEight} %</li>
+                  <li> Less 70.5: {scoreStatistics.standardDeviationbyScore?.seventy} %</li>
                 </ul>
+              </li>
+              <li>
+                <a href={scoreStatistics.generateLinkWolfram} target="_blank" rel="noreferrer noopener">
+                  View on Wolfram Alpha</a>
               </li>
             </ul>
           </Card>
