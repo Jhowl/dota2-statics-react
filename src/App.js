@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Space, Spin, ConfigProvider, theme, Row, Col } from 'antd';
+import {  Spin, ConfigProvider, theme } from 'antd';
 
+import { fetchMatches } from './redux/matchesSlice';
+import { fetchTeams } from './features/teams/teamsSlice';
 
 import LeaguesSelect from './components/leagues';
 import TeamsSelect from './components/teams';
 import HeroesSelect from './components/heroes';
 import MatchesTable from './components/matches';
 import Statistics from './components/statistics';
-
-import { fetchMatches } from './redux/matchesSlice';
-import { fetchTeams } from './features/teams/teamsSlice';
 
 const App = () => {
   const dispatch = useDispatch();

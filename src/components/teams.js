@@ -13,7 +13,7 @@ const TeamsSelect = ({ onTeamChange }) => {
   }, [dispatch]);
 
   return (
-    <div style={{ width: '50%'}}>
+    <div style={{ width: '80%'}}>
       <h4>Teams</h4>
       {loading && <p>Loading...</p>}
       <div>

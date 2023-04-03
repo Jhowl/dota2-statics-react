@@ -13,7 +13,7 @@ const LeaguesSelect = ({ onLeagueChange }) => {
   }, [dispatch]);
 
   return (
-    <div style={{ marginLeft: 60, width: '50%'}}>
+    <div style={{ marginLeft: 60, width: '100%'}}>
       <h4>Leagues</h4>
       {loading && <p>Loading...</p>}
       <div>
