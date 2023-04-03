@@ -86,15 +86,18 @@ const MatchesTable = () => {
 
   return (
     <div>
-      <h1>Matches</h1>
+      <h4>Matches</h4>
       {loading && <p>Loading...</p>}
 
       <span>
         Total matches: {data.length}
       </span>
       <Table
-      // style={{ backgroundColor: 'orange' }}
-      loading={loading} dataSource={data} columns={columns} bordered/>
+        loading={loading}
+        dataSource={data}
+        columns={columns}
+        pagination={false}
+        bordered/>
       {error && <p>{error}</p>}
     </div>
   );

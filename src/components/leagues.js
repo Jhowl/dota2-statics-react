@@ -13,10 +13,10 @@ const LeaguesSelect = ({ onLeagueChange }) => {
   }, [dispatch]);
 
   return (
-    <div style={{ marginLeft: 60}}>
-      <h1>Leagues</h1>
+    <div style={{ marginLeft: 60, width: '50%'}}>
+      <h4>Leagues</h4>
       {loading && <p>Loading...</p>}
-      <div style={{ marginBottom: 16, marginTop: 16 }}>
+      <div>
         <Select
           mode='multiple'
           allowClear={true}

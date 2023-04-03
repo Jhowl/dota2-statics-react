@@ -13,8 +13,8 @@ const TeamsSelect = ({ onTeamChange }) => {
   }, [dispatch]);
 
   return (
-    <div style={{ marginLeft: 60}}>
-      <h2>Teams</h2>
+    <div style={{ width: '50%'}}>
+      <h4>Teams</h4>
       {loading && <p>Loading...</p>}
       <div>
         <Select

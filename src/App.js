@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Space, Spin, ConfigProvider, theme } from 'antd';
+import { Space, Spin, ConfigProvider, theme, Row, Col } from 'antd';
 
 
 import LeaguesSelect from './components/leagues';
@@ -52,20 +52,20 @@ const App = () => {
   return (
     <ConfigProvider
     theme={{
-      algorithm: theme.darkAlgorithm,
+      algorithm: [theme.darkAlgorithm, theme.compactAlgorithm],
+
     }}
   >
     <div className="Statistics">
-       <Space
-        style={{
-          width: '100%',
-        }}
-        direction="vertical"
-        >
-          <LeaguesSelect onLeagueChange={handleLeagueChange} />
-          <TeamsSelect onTeamChange={handleTeamChange} />
-          <HeroesSelect onHeroChange={handleHeroChange} />
-      </Space>
+      <div className="Filter" style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        }}>
+        <LeaguesSelect onLeagueChange={handleLeagueChange} />
+        <TeamsSelect onTeamChange={handleTeamChange} />
+        <HeroesSelect onHeroChange={handleHeroChange} />
+      </div>
       <Statistics />
       <MatchesTable />
     </div>
