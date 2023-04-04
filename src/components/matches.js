@@ -89,9 +89,6 @@ const MatchesTable = () => {
       <h4>Matches</h4>
       {loading && <p>Loading...</p>}
 
-      <span>
-        Total matches: {data.length}
-      </span>
       <Table
         loading={loading}
         dataSource={data}

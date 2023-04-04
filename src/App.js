@@ -4,6 +4,7 @@ import {  Spin, ConfigProvider, theme } from 'antd';
 
 import { fetchMatches } from './redux/matchesSlice';
 import { fetchTeams } from './features/teams/teamsSlice';
+import { selectAllMatches } from './redux/matchesSlice';
 
 import LeaguesSelect from './components/leagues';
 import TeamsSelect from './components/teams';
@@ -16,6 +17,8 @@ const App = () => {
   const [selectedLeagues, setSelectedLeagues] = useState([]);
   const [selectedTeam, setSelectedTeam] = useState([]);
   const [selectedHeros, setSelectedHero] = useState([]);
+  const { matches } = useSelector(selectAllMatches);
+
 
   useEffect(() => {
     if (selectedLeagues.length || selectedTeam.length || selectedHeros.length) {
@@ -64,6 +67,11 @@ const App = () => {
         <LeaguesSelect onLeagueChange={handleLeagueChange} />
         <TeamsSelect onTeamChange={handleTeamChange} />
         <HeroesSelect onHeroChange={handleHeroChange} />
+      </div>
+      <div className="MatchesTotal" style={{ textAlign: 'center', marginTop: '20px' }}>
+        <span style={{ fontSize: '20px' }}>
+          Total matches: {matches.length}
+        </span>
       </div>
       <Statistics />
       <MatchesTable />

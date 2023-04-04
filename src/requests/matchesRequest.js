@@ -6,7 +6,17 @@ export const matches = async ({ leaguesIds = [], teamsIds = [], year = '2023', h
 
   const whereLeagues = leaguesIds.length > 0 ? `AND leagues.leagueid IN (${leaguesIds})` : '';
   const whereTeams = teamsIds.length > 0 ? `AND (matches.radiant_team_id IN (${teamsIds}) OR matches.dire_team_id IN (${teamsIds}))` : '';
-  const whereHeroes = heroesIds.length > 0 ? `AND (player_matches.hero_id IN (${heroesIds}))` : '';
+  let whereHeroes = heroesIds.length > 0 ? `AND (player_matches.hero_id IN (${heroesIds}))` : '';
+
+
+//   AND ((matches.radiant_team_id = 2163 AND player_matches.player_slot < 128) OR
+//   (matches.dire_team_id = 2163 AND player_matches.player_slot >= 128))
+// AND player_matches.hero_id = 14
+
+  if( teamsIds.length > 0 ) {
+    whereHeroes = `AND ((matches.radiant_team_id IN (${teamsIds}) AND player_matches.player_slot < 128) OR
+    (matches.dire_team_id IN (${teamsIds}) AND player_matches.player_slot >= 128)) ${whereHeroes}`
+  }
 
   const queryMatches = `
     SELECT
