@@ -37,19 +37,14 @@ const HeroesTable = () => {
       dataIndex: 'heroMatches',
       key: 'heroMatches',
       sorter: (a, b) => a.heroMatches - b.heroMatches,
-      // sortOrder
     },
     {
       title: 'Score Average',
       dataIndex: 'averageScore',
       key: 'averageScore',
+      sorter: (a, b) => a.averageScore - b.averageScore,
     }
   ];
-
-    //average score
-    // for (const hero of heroesGroup) {
-    //   hero.averageScore = hero.matchesScore / hero.heroMatches
-    // }
 
   const data = heroesData.map((hero) => ({
     averageScore: (hero.matchesScore / hero.heroMatches).toFixed(3),
@@ -57,8 +52,8 @@ const HeroesTable = () => {
   }));
 
   return (
-    <div>
-      <h4>Matches</h4>
+    <div className='heroes-table' style={{ borderRadius: '5px', paddingLeft: '30px', paddingRight: '30px' }}>
+      <h4>Heroes K+D Average</h4>
       {loading && <p>Loading...</p>}
 
       <Table
@@ -66,6 +61,8 @@ const HeroesTable = () => {
         dataSource={data}
         columns={columns}
         pagination={false}
+        size="small"
+        scroll={{ y: 240 }}
         bordered/>
       {error && <p>{error}</p>}
     </div>

@@ -85,7 +85,7 @@ const MatchesTable = () => {
   }));
 
   return (
-    <div>
+    <div className='matches-table' style={{ borderRadius: '5px', paddingLeft: '30px', paddingRight: '30px' }}>
       <h4>Matches</h4>
       {loading && <p>Loading...</p>}
 
@@ -94,6 +94,7 @@ const MatchesTable = () => {
         dataSource={data}
         columns={columns}
         pagination={false}
+        scroll={{ y: 600 }}
         bordered/>
       {error && <p>{error}</p>}
     </div>

@@ -78,6 +78,11 @@ const App = () => {
       <HeroesAverage />
       <MatchesTable />
     </div>
+    <footer style={{ textAlign: 'center', marginTop: '20px' }}>
+      <span style={{ fontSize: '12px' }}>
+        Made with ❤️ by Jhonatan
+      </span>
+    </footer>
     </ConfigProvider>
   )
 };
