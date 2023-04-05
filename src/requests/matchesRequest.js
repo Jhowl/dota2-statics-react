@@ -8,11 +8,6 @@ export const matches = async ({ leaguesIds = [], teamsIds = [], year = '2023', h
   const whereTeams = teamsIds.length > 0 ? `AND (matches.radiant_team_id IN (${teamsIds}) OR matches.dire_team_id IN (${teamsIds}))` : '';
   let whereHeroes = heroesIds.length > 0 ? `AND (player_matches.hero_id IN (${heroesIds}))` : '';
 
-
-//   AND ((matches.radiant_team_id = 2163 AND player_matches.player_slot < 128) OR
-//   (matches.dire_team_id = 2163 AND player_matches.player_slot >= 128))
-// AND player_matches.hero_id = 14
-
   if( teamsIds.length > 0 ) {
     whereHeroes = `AND ((matches.radiant_team_id IN (${teamsIds}) AND player_matches.player_slot < 128) OR
     (matches.dire_team_id IN (${teamsIds}) AND player_matches.player_slot >= 128)) ${whereHeroes}`
@@ -28,7 +23,14 @@ export const matches = async ({ leaguesIds = [], teamsIds = [], year = '2023', h
       matches.radiant_win AS radiant_win,
       MAX(teams_radiant.name) AS radiant_name, -- using MAX as an aggregate function
       teams_dire.name AS dire_name,
-      leagues.name AS league_name
+      leagues.name AS league_name,
+      json_agg(json_build_object(
+        'player_slot', player_matches.player_slot,
+        'hero_id', player_matches.hero_id,
+        'kills', player_matches.kills,
+        'deaths', player_matches.deaths,
+        'assists', player_matches.assists
+      )) AS players
     FROM
       matches
       JOIN match_patch USING (match_id)
@@ -53,8 +55,7 @@ export const matches = async ({ leaguesIds = [], teamsIds = [], year = '2023', h
     ORDER BY
       matches.match_id DESC
       `
-
-      console.log(queryMatches)
+      // console.log(queryMatches)
 
     const urlMatches = `${urlBase}${encodeURIComponent(queryMatches)}`
     const matches = await axios.get(urlMatches)

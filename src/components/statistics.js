@@ -16,8 +16,10 @@ const Statistics = () => {
 
     const durationStatistics = calculateStatistics(matches.map(match => match.duration));
     const scoreStatistics = calculateStatistics(matches.map(match => match.radiant_score + match.dire_score));
+
     setDurationStatistics(durationStatistics);
     setScoreStatistics(scoreStatistics);
+
   }, [matches]);
 
   const convertSecondsToTime = (seconds) => {

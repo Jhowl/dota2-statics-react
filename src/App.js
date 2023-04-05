@@ -10,6 +10,7 @@ import LeaguesSelect from './components/leagues';
 import TeamsSelect from './components/teams';
 import HeroesSelect from './components/heroes';
 import MatchesTable from './components/matches';
+import HeroesAverage from './components/heroesAverage';
 import Statistics from './components/statistics';
 
 const App = () => {
@@ -74,6 +75,7 @@ const App = () => {
         </span>
       </div>
       <Statistics />
+      <HeroesAverage />
       <MatchesTable />
     </div>
     </ConfigProvider>
