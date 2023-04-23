@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { Select } from 'antd';
 
-import { selectAllTeams, fetchTeams } from "../features/teams/teamsSlice";
+import { selectAllTeams, fetchTeams } from "../redux/teamsSlice";
 
 const TeamsSelect = ({ onTeamChange }) => {
   const dispatch = useDispatch();

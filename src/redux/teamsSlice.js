@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { teams } from './requests';
+import { teams } from '../requests/teams';
 
 const initialState = {
   teams: [],
@@ -9,7 +9,7 @@ const initialState = {
 
 export const fetchTeams = createAsyncThunk('dota2/fetchTeams', async (filters) => {
   const response = await teams(filters);
-  return response.data.rows;
+  return response.rows;
 });
 
 const teamsSlice = createSlice({

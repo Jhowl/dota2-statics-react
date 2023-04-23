@@ -10,13 +10,14 @@ export const leagues = async ({ year = '2023' } = {}) => {
       JOIN match_patch USING (match_id)
       JOIN leagues USING (leagueid)
     WHERE
-      leagues.tier = 'premium' AND
+      ( leagues.tier = 'premium' OR leagues.leagueid = 15196 )
+      AND
       EXTRACT(YEAR FROM to_timestamp(matches.start_time)) >= ${year}
     GROUP BY
-      leagues.name, leagues.leagueid`
+      leagues.name, leagues.leagueid`;
 
-    const urlLeagues = urlBase + encodeURIComponent(queryLeagues)
-    const leagues = await axios.get(urlLeagues)
+  const urlLeagues = `${urlBase}${encodeURIComponent(queryLeagues)}`;
+  const response = await axios.get(urlLeagues)
 
-    return leagues
-}
+  return response?.data;
+};

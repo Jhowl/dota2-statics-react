@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getHeroes } from '../requests/heroesRequests';
+import { getHeroes } from '../requests/heroes';
 
 const initialState = {
   heroes: [],

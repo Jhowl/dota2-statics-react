@@ -1,19 +1,19 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { matches } from '../requests/matches';
+import { matchesByTeam } from '../requests/matchesByTeam';
 
 const initialState = {
-  matches: [],
+  team: {},
   loading: false,
   error: null
 };
 
-export const fetchMatches = createAsyncThunk('dota2/fetchMatches', async (filters) => {
-  const response = await matches(filters);
+export const fetchMatches = createAsyncThunk('dota2/fetchMatches', async (teamId, filters) => {
+  const response = await matchesByTeam(teamId, filters);
   return response.rows;
 });
 
-const matchesSlice = createSlice({
-  name: 'matches',
+const teamSlice = createSlice({
+  name: 'team',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -23,7 +23,7 @@ const matchesSlice = createSlice({
       })
       .addCase(fetchMatches.fulfilled, (state, action) => {
         state.loading = false;
-        state.matches = action.payload;
+        state.team = action.payload;
       })
       .addCase(fetchMatches.rejected, (state, action) => {
         state.loading = false;
@@ -32,8 +32,8 @@ const matchesSlice = createSlice({
   },
 });
 
-export const selectAllMatches = (state) => state.matches;
-export const selectMatchesLoading = (state) => state.matches.loading;
-export const selectMatchesError = (state) => state.matches.error;
+export const selectAllMatches = (state) => state.team;
+export const selectMatchesLoading = (state) => state.team.loading;
+export const selectMatchesError = (state) => state.team.error;
 
-export default matchesSlice.reducer
+export default teamSlice.reducer

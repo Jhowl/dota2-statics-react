@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import { Card, Col, Row } from 'antd';
 import calculateStatistics from '../utils/statistics'
 import { selectAllMatches } from '../redux/matchesSlice';
+// import Charts from './charts';
+
 
 const Statistics = () => {
   const [durationStatistics, setDurationStatistics] = useState({});
@@ -65,6 +67,7 @@ const Statistics = () => {
                   View on Wolfram Alpha</a>
               </li>
             </ul>
+            {/* <Charts data={durationStatistics.standardDeviationbyTime} /> */}
           </Card>
         </Col>
         <Col span={12}>
@@ -109,6 +112,7 @@ const Statistics = () => {
                   View on Wolfram Alpha</a>
               </li>
             </ul>
+            {/* <Charts data={scoreStatistics.standardDeviationbyScore}/> */}
           </Card>
         </Col>
       </Row>

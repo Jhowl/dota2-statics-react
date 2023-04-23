@@ -95,6 +95,7 @@ const MatchesTable = () => {
         columns={columns}
         pagination={false}
         scroll={{ y: 600 }}
+        size="small"
         bordered/>
       {error && <p>{error}</p>}
     </div>

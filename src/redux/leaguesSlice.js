@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { leagues } from '../requests/leaguesRequests';
+import { leagues } from '../requests/leagues';
 
 const initialState = {
   leagues: [],
@@ -9,7 +9,7 @@ const initialState = {
 
 export const fetchLeagues = createAsyncThunk('dota2/fetchLeagues', async () => {
   const response = await leagues();
-  return response.data.rows;
+  return response.rows;
 });
 
 const leaguesSlice = createSlice({

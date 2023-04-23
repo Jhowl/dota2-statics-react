@@ -3,10 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import {  Spin, ConfigProvider, theme } from 'antd';
 
 import { fetchMatches } from './redux/matchesSlice';
-import { fetchTeams } from './redux/teamsSlice';
+import { fetchTeams } from './features/teams/teamsSlice';
 import { selectAllMatches } from './redux/matchesSlice';
 
-import PatchesSelect from './components/patches';
 import LeaguesSelect from './components/leagues';
 import TeamsSelect from './components/teams';
 import HeroesSelect from './components/heroes';
@@ -14,7 +13,7 @@ import MatchesTable from './components/matches';
 import HeroesAverage from './components/heroesAverage';
 import Statistics from './components/statistics';
 
-const App = () => {
+const Home = () => {
   const dispatch = useDispatch();
   const [selectedLeagues, setSelectedLeagues] = useState([]);
   const [selectedTeam, setSelectedTeam] = useState([]);
@@ -24,7 +23,7 @@ const App = () => {
 
   useEffect(() => {
     if (selectedLeagues.length || selectedTeam.length || selectedHeros.length) {
-      dispatch(fetchMatches({leaguesIds: selectedLeagues, teamsIds: selectedTeam, heroesIds: selectedHeros, patch: '7.32'}));
+      dispatch(fetchMatches({leaguesIds: selectedLeagues, teamsIds: selectedTeam, heroesIds: selectedHeros}));
     }
   }, [dispatch, selectedLeagues, selectedTeam, selectedHeros]);
 
@@ -40,10 +39,6 @@ const App = () => {
 
   const handleHeroChange = (value) => {
     setSelectedHero(value);
-  };
-
-  const handlePatchChange = (value) => {
-    dispatch(fetchMatches({leaguesIds: selectedLeagues, teamsIds: selectedTeam, heroesIds: selectedHeros, patch: value}));
   };
 
   const { isLoading } = useSelector((state) => state.matches);
@@ -69,7 +64,6 @@ const App = () => {
         justifyContent: 'space-between',
         alignItems: 'center',
         }}>
-        <PatchesSelect onPatchChange={handlePatchChange} />
         <LeaguesSelect onLeagueChange={handleLeagueChange} />
         <TeamsSelect onTeamChange={handleTeamChange} />
         <HeroesSelect onHeroChange={handleHeroChange} />
@@ -92,4 +86,4 @@ const App = () => {
   )
 };
 
-export default App;
+export default Home;
