@@ -1,15 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from "react-redux";
 import { Card, Col, Row } from 'antd';
 import calculateStatistics from '../utils/statistics'
-import { selectAllMatches } from '../redux/matchesSlice';
-// import Charts from './charts';
 
-
-const Statistics = () => {
+const Statistics = ({ matches }) => {
   const [durationStatistics, setDurationStatistics] = useState({});
   const [scoreStatistics, setScoreStatistics] = useState({});
-  const { matches } = useSelector(selectAllMatches);
 
   useEffect(() => {
     if (!matches.length) {

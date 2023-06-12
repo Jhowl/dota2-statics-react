@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from "react-redux";
-import { selectAllMatches } from '../redux/matchesSlice';
-
 import heroesStatistics from '../utils/heroesStatistics'
 
 import { Table } from 'antd';
 
-const HeroesTable = () => {
-  const { matches, loading, error } = useSelector(selectAllMatches);
+const HeroesTable = ({ matches, loading, error }) => {
+  // const { matches, loading, error } = useSelector(selectAllMatches);
   const [heroesData, setHeroesData] = useState([]);
 
 

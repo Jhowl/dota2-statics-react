@@ -1,15 +1,7 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from "react-redux";
-import { selectAllMatches, fetchMatches } from "../redux/matchesSlice";
+import React from 'react';
 import { Table, Tag } from 'antd';
 
-const MatchesTable = () => {
-  const dispatch = useDispatch();
-  const { matches, loading, error } = useSelector(selectAllMatches);
-
-  useEffect(() => {
-      dispatch(fetchMatches());
-  }, [dispatch]);
+const MatchesTable = ({ matches, loading, error }) => {
 
   const columns = [
     {

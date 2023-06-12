@@ -22,7 +22,6 @@ const TeamsListPage = () => {
       team.tag.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  console.log(teamsApi);
 
   return (
     <div>

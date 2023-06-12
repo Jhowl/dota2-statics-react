@@ -10,7 +10,11 @@ export const leagues = async ({ year = '2023' } = {}) => {
       JOIN match_patch USING (match_id)
       JOIN leagues USING (leagueid)
     WHERE
-      ( leagues.tier = 'premium' OR leagues.leagueid = 15196 )
+      (
+        leagues.tier = 'premium'
+        OR leagues.leagueid = 15196
+        OR leagues.leagueid = 15439
+      )
       AND
       EXTRACT(YEAR FROM to_timestamp(matches.start_time)) >= ${year}
     GROUP BY

@@ -2,12 +2,12 @@ import axios from 'axios';
 
 const urlBase = 'https://api.opendota.com/api/explorer?sql=';
 
-export const matches = async ({ leaguesIds = [], teamsIds = [], year = '2023', heroesIds = [], patch = '7.33'
+export const matches = async ({ leaguesIds = [], teamsIds = [], year = '2023', heroesIds = [], patch = ''
  } = {}) => {
   const whereLeagues = leaguesIds.length && `AND leagues.leagueid IN (${leaguesIds})`;
   const whereTeams = teamsIds.length && `AND (matches.radiant_team_id IN (${teamsIds}) OR matches.dire_team_id IN (${teamsIds}))`;
-  const whereHeroes = heroesIds.length && `AND ((matches.radiant_team_id IN (${teamsIds}) AND player_matches.player_slot < 128) OR
-    (matches.dire_team_id IN (${teamsIds}) AND player_matches.player_slot >= 128))`;
+  const whereHeroes = heroesIds.length && `AND ((matches.radiant_team_id IN (${heroesIds}) AND player_matches.player_slot < 128) OR
+    (matches.dire_team_id IN (${heroesIds}) AND player_matches.player_slot >= 128))`;
   const wherePatch = patch && `AND match_patch.patch = '${patch}'`;
 
   const queryMatches = `
@@ -21,12 +21,18 @@ export const matches = async ({ leaguesIds = [], teamsIds = [], year = '2023', h
       MAX(teams_radiant.name) AS radiant_name,
       teams_dire.name AS dire_name,
       leagues.name AS league_name,
+      matches.radiant_team_id,
+      matches.dire_team_id,
+      match_patch.patch,
+      leagues.leagueid AS leagueId,
       json_agg(json_build_object(
         'player_slot', player_matches.player_slot,
+        'team', CASE WHEN player_matches.player_slot < 128 THEN 'radiant' ELSE 'dire' END,
         'hero_id', player_matches.hero_id,
         'kills', player_matches.kills,
         'deaths', player_matches.deaths,
-        'assists', player_matches.assists
+        'assists', player_matches.assists,
+        'team_id', teams.team_id
       )) AS players
     FROM
       matches
@@ -35,8 +41,13 @@ export const matches = async ({ leaguesIds = [], teamsIds = [], year = '2023', h
       JOIN player_matches ON player_matches.match_id = matches.match_id
       JOIN teams teams_radiant ON teams_radiant.team_id = matches.radiant_team_id
       JOIN teams teams_dire ON teams_dire.team_id = matches.dire_team_id
+      JOIN teams ON teams.team_id = CASE WHEN player_matches.player_slot < 128 THEN matches.radiant_team_id ELSE matches.dire_team_id END
     WHERE
-      ( leagues.tier = 'premium' OR leagues.leagueid = 15196 ) AND
+      (
+        leagues.tier = 'premium'
+        OR leagues.leagueid = 15196
+        OR leagues.leagueid = 15439
+      ) AND
       EXTRACT(YEAR FROM to_timestamp(matches.start_time)) >= ${year}
       ${whereLeagues || ''}
       ${whereTeams || ''}
@@ -49,7 +60,9 @@ export const matches = async ({ leaguesIds = [], teamsIds = [], year = '2023', h
       matches.radiant_score,
       matches.radiant_win,
       teams_dire.name,
-      leagues.name
+      leagues.name,
+      leagues.leagueid,
+      match_patch.patch
     ORDER BY
       matches.match_id DESC`;
 

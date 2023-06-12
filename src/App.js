@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {  Spin, ConfigProvider, theme } from 'antd';
 
 import { fetchMatches } from './redux/matchesSlice';
-import { fetchTeams } from './redux/teamsSlice';
+// import { fetchTeams } from './redux/teamsSlice';
 import { selectAllMatches } from './redux/matchesSlice';
 
 import PatchesSelect from './components/patches';
@@ -14,28 +14,29 @@ import MatchesTable from './components/matches';
 import HeroesAverage from './components/heroesAverage';
 import Statistics from './components/statistics';
 
+import filter from './utils/filter';
+
 const App = () => {
   const dispatch = useDispatch();
   const [selectedLeagues, setSelectedLeagues] = useState([]);
   const [selectedTeam, setSelectedTeam] = useState([]);
   const [selectedHeros, setSelectedHero] = useState([]);
-  const { matches } = useSelector(selectAllMatches);
+  const [selectedPatch, setSelectedPatch] = useState([]);
+
+  const { matches, loading, error } = useSelector(selectAllMatches);
 
 
   useEffect(() => {
-    if (selectedLeagues.length || selectedTeam.length || selectedHeros.length) {
-      dispatch(fetchMatches({leaguesIds: selectedLeagues, teamsIds: selectedTeam, heroesIds: selectedHeros, patch: '7.32'}));
-    }
-  }, [dispatch, selectedLeagues, selectedTeam, selectedHeros]);
+      dispatch(fetchMatches());
+  }, [dispatch]);
 
   const handleLeagueChange = (value) => {
     setSelectedLeagues(value);
-    dispatch(fetchTeams({leaguesIds: value}));
+    // dispatch(fetchTeams({leaguesIds: value}));
   };
 
   const handleTeamChange = (value) => {
     setSelectedTeam(value);
-    // dispatch(fetchMatches({leaguesIds: selectedLeagues, teamsIds: value, heroesIds: selectedHeros}));
   };
 
   const handleHeroChange = (value) => {
@@ -43,7 +44,7 @@ const App = () => {
   };
 
   const handlePatchChange = (value) => {
-    dispatch(fetchMatches({leaguesIds: selectedLeagues, teamsIds: selectedTeam, heroesIds: selectedHeros, patch: value}));
+    setSelectedPatch(value);
   };
 
   const { isLoading } = useSelector((state) => state.matches);
@@ -55,6 +56,13 @@ const App = () => {
       </div>
     );
   }
+
+  const filteredMatches = filter(matches, {
+    leagueIds: selectedLeagues,
+    teamIds: selectedTeam,
+    heroIds: selectedHeros,
+    patches: selectedPatch,
+  })
 
   return (
     <ConfigProvider
@@ -76,12 +84,12 @@ const App = () => {
       </div>
       <div className="MatchesTotal" style={{ textAlign: 'center', marginTop: '20px' }}>
         <span style={{ fontSize: '20px' }}>
-          Total matches: {matches.length}
+          Total matches: {filteredMatches.length}
         </span>
       </div>
-      <Statistics />
-      <HeroesAverage />
-      <MatchesTable />
+      <Statistics matches={filteredMatches} />
+      <HeroesAverage matches={filteredMatches} loading={loading} error={error} />
+      <MatchesTable matches={filteredMatches} loading={loading} error={error} />
     </div>
     <footer style={{ textAlign: 'center', marginTop: '20px' }}>
       <span style={{ fontSize: '12px' }}>

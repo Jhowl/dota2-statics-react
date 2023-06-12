@@ -20,7 +20,7 @@ const PatchesSelect = ({ onPatchChange }) => {
           }
           style={{ width: '50%' }}
           onChange={onPatchChange}
-          placeholder="Select a hero"
+          placeholder="Select patch"
           options={patches}
           >
         </Select>

@@ -33,7 +33,11 @@ export const matchesByTeam = async (teamId = '', { leaguesIds = [], year = '2023
       JOIN teams teams_radiant ON teams_radiant.team_id = matches.radiant_team_id
       JOIN teams teams_dire ON teams_dire.team_id = matches.dire_team_id
     WHERE
-      ( leagues.tier = 'premium' OR leagues.leagueid = 15196 ) AND
+      (
+        leagues.tier = 'premium'
+        OR leagues.leagueid = 15196
+        OR leagues.leagueid = 15439
+      ) AND
       EXTRACT(YEAR FROM to_timestamp(matches.start_time)) >= ${year}
       AND (matches.radiant_team_id = ${teamId} OR matches.dire_team_id = ${teamId})
       ${whereLeagues || ''}
