@@ -47,6 +47,7 @@ export const matches = async ({ leaguesIds = [], teamsIds = [], year = '2023', h
         leagues.tier = 'premium'
         OR leagues.leagueid = 15196
         OR leagues.leagueid = 15439
+        OR leagues.leagueid = 15475
       ) AND
       EXTRACT(YEAR FROM to_timestamp(matches.start_time)) >= ${year}
       ${whereLeagues || ''}
