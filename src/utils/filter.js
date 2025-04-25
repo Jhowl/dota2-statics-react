@@ -2,7 +2,7 @@ export default function filterMatches(matches, filters) {
   return matches.filter(match => {
     // Filter by league ID
 
-    if (filters.leagueIds?.length && !filters.leagueIds.includes(match.leagueid)) {
+    if (filters.leagueIds?.length && !filters.leagueIds.includes(match.league_id)) {
 
       return false;
     }

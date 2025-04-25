@@ -6,10 +6,10 @@ const MatchesTable = ({ matches, loading, error }) => {
   const columns = [
     {
       title: 'Match ID',
-      dataIndex: 'match_id',
-      key: 'match_id',
-      render: (match_id) => (
-        <><span> {match_id}</span><a href={"https://www.dotabuff.com/matches/" + match_id} target="_blank" rel="noopener noreferrer">
+      dataIndex: 'key',
+      key: 'key',
+      render: (key) => (
+        <><span> {key}</span><a href={"https://www.dotabuff.com/matches/" + key} target="_blank" rel="noopener noreferrer">
           <img src="dotabuff.png" alt="dotabuff" width="15" height="15">
           </img>
         </a></>
@@ -70,12 +70,6 @@ const MatchesTable = ({ matches, loading, error }) => {
     },
   ];
 
-  const data = matches.map((match) => ({
-    ...match,
-    key: match.match_id,
-    team_win: match.radiant_win ? match.radiant_name : match.dire_name,
-  }));
-
   return (
     <div className='matches-table' style={{ borderRadius: '5px', paddingLeft: '30px', paddingRight: '30px' }}>
       <h4>Matches</h4>
@@ -83,7 +77,7 @@ const MatchesTable = ({ matches, loading, error }) => {
 
       <Table
         loading={loading}
-        dataSource={data}
+        dataSource={matches}
         columns={columns}
         pagination={false}
         scroll={{ y: 600 }}

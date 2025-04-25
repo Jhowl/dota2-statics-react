@@ -1,21 +1,14 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from "react-redux";
+import React from 'react';
 import { Select } from 'antd';
-
-import { selectAllHeroes, fetchHeroes } from "../redux/heroesSlice";
+// import { selectAllHeroes, fetchHeroes } from "../redux/heroesSlice";
+import { heroes } from 'dotaconstants'
 
 const HeroesSelect = ({ onHeroChange }) => {
-  const dispatch = useDispatch();
-  const { heroes, loading, error } = useSelector(selectAllHeroes);
-
-  useEffect(() => {
-      dispatch(fetchHeroes());
-  }, [dispatch]);
 
   return (
     <div style={{ width: '50%'}}>
       <h4>Heroes</h4>
-      {loading && <p>Loading...</p>}
+
       <div>
         <Select
           mode='multiple'
@@ -27,12 +20,11 @@ const HeroesSelect = ({ onHeroChange }) => {
           style={{ width: '50%' }}
           onChange={onHeroChange}
           placeholder="Select a hero"
-          options={heroes.map((hero) => ({ value: hero.id, label: hero.localized_name }))}
+          options={Object.values(heroes).map((hero) => ({ value: hero.id, label: hero.localized_name }))}
           >
         </Select>
       </div>
 
-      {error && <p>{error}</p>}
     </div>
   );
 }

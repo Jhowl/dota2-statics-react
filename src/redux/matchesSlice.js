@@ -9,7 +9,7 @@ const initialState = {
 
 export const fetchMatches = createAsyncThunk('dota2/fetchMatches', async (filters) => {
   const response = await matches(filters);
-  return response.rows;
+  return response?.data;
 });
 
 const matchesSlice = createSlice({

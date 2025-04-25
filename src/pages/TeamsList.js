@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { List, Spin, Input, Card, Image } from 'antd';
+import { List, Spin, Input, Image } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchTeamsApi, selectAllTeamsApi } from '../redux/teamsApiSlice';
 
@@ -7,8 +7,7 @@ const { Search } = Input;
 
 const TeamsListPage = () => {
   const dispatch = useDispatch();
-  // const teams = useSelector(selectAllTeamsApi);
-  const { teamsApi, loading, error } = useSelector(selectAllTeamsApi);
+  const { teamsApi, loading } = useSelector(selectAllTeamsApi);
 
   const [searchTerm, setSearchTerm] = useState('');
 

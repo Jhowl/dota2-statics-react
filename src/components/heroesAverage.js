@@ -1,25 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import heroesStatistics from '../utils/heroesStatistics'
+import React from 'react';
 
 import { Table } from 'antd';
 
-const HeroesTable = ({ matches, loading, error }) => {
-  // const { matches, loading, error } = useSelector(selectAllMatches);
-  const [heroesData, setHeroesData] = useState([]);
-
-
-  useEffect(() => {
-    if (!matches.length) {
-      return;
-    }
-
-    const heroesData = heroesStatistics(matches.map(match => ({
-      score: match.radiant_score + match.dire_score,
-      heroes: match.players.map(player => player.hero_id)
-    })))
-
-    setHeroesData(heroesData);
-  }, [matches]);
+const HeroesTable = ({ heroesAverage, loading, error }) => {
 
   const columns = [
     {
@@ -43,7 +26,7 @@ const HeroesTable = ({ matches, loading, error }) => {
     }
   ];
 
-  const data = heroesData.map((hero) => ({
+  const data = heroesAverage?.map((hero) => ({
     averageScore: (hero.matchesScore / hero.heroMatches).toFixed(3),
     ...hero,
   }));

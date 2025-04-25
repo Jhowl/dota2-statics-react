@@ -13,8 +13,8 @@ import HeroesSelect from './components/heroes';
 import MatchesTable from './components/matches';
 import HeroesAverage from './components/heroesAverage';
 import Statistics from './components/statistics';
-
-import filter from './utils/filter';
+import StandartDeviationScore from './components/standartDeviationScore';
+import StandartDeviationDuration from './components/standartDeviationDuration'
 
 const App = () => {
   const dispatch = useDispatch();
@@ -25,10 +25,13 @@ const App = () => {
 
   const { matches, loading, error } = useSelector(selectAllMatches);
 
-
   useEffect(() => {
+    if (selectedLeagues.length || selectedTeam.length || selectedHeros.length || selectedPatch) {
+      dispatch(fetchMatches({leaguesIds: selectedLeagues, teamsIds: selectedTeam, heroesIds: selectedHeros, patch: selectedPatch}));
+    } else {
       dispatch(fetchMatches());
-  }, [dispatch]);
+    }
+  }, [dispatch, selectedLeagues, selectedTeam, selectedHeros, selectedPatch]);
 
   const handleLeagueChange = (value) => {
     setSelectedLeagues(value);
@@ -57,13 +60,6 @@ const App = () => {
     );
   }
 
-  const filteredMatches = filter(matches, {
-    leagueIds: selectedLeagues,
-    teamIds: selectedTeam,
-    heroIds: selectedHeros,
-    patches: selectedPatch,
-  })
-
   return (
     <ConfigProvider
     theme={{
@@ -84,12 +80,14 @@ const App = () => {
       </div>
       <div className="MatchesTotal" style={{ textAlign: 'center', marginTop: '20px' }}>
         <span style={{ fontSize: '20px' }}>
-          Total matches: {filteredMatches.length}
+          Total matches: {matches.total}
         </span>
       </div>
-      <Statistics matches={filteredMatches} />
-      <HeroesAverage matches={filteredMatches} loading={loading} error={error} />
-      <MatchesTable matches={filteredMatches} loading={loading} error={error} />
+      <Statistics statistics={matches.statistics} />
+      <StandartDeviationDuration standardDeviation={matches.standardDeviationHeroesDuration} />
+      <StandartDeviationScore title='KD' standardDeviation={matches.standardDeviationHeroes} />
+      <HeroesAverage heroesAverage={matches.heroesAverage} loading={loading} error={error} />
+      <MatchesTable matches={matches.table} loading={loading} error={error} />
     </div>
     <footer style={{ textAlign: 'center', marginTop: '20px' }}>
       <span style={{ fontSize: '12px' }}>

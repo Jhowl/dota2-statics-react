@@ -20,7 +20,6 @@ const Home = () => {
   const [selectedHeros, setSelectedHero] = useState([]);
   const { matches } = useSelector(selectAllMatches);
 
-
   useEffect(() => {
     if (selectedLeagues.length || selectedTeam.length || selectedHeros.length) {
       dispatch(fetchMatches({leaguesIds: selectedLeagues, teamsIds: selectedTeam, heroesIds: selectedHeros}));
