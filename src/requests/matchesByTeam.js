@@ -56,6 +56,7 @@ export const matchesByTeam = async (teamId = '', { leaguesIds = [], year = '2023
         OR leagues.leagueid = 17907
         OR leagues.leagueid = 17795
         OR leagues.leagueid = 18058
+        OR leagues.leagueid = 17418
       ) AND
       EXTRACT(YEAR FROM to_timestamp(matches.start_time)) >= ${year}
       AND (matches.radiant_team_id = ${teamId} OR matches.dire_team_id = ${teamId})

@@ -50,6 +50,8 @@ export const leagues = async ({ year = '2023' } = {}) => {
         OR leagues.leagueid = 17907
         OR leagues.leagueid = 17795
         OR leagues.leagueid = 18058
+        OR leagues.leagueid = 17418
+        OR leagues.leagueid = 18111
       )
       AND
       EXTRACT(YEAR FROM to_timestamp(matches.start_time)) >= ${year}
