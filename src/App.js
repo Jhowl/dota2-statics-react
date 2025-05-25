@@ -6,9 +6,6 @@ import { fetchMatches } from './redux/matchesSlice';
 // import { fetchTeams } from './redux/teamsSlice';
 import { selectAllMatches } from './redux/matchesSlice';
 
-const { Content, Footer } = Layout;
-const { Title, Text } = Typography;
-
 import PatchesSelect from './components/patches';
 import LeaguesSelect from './components/leagues';
 import TeamsSelect from './components/teams';
@@ -17,7 +14,10 @@ import MatchesTable from './components/matches';
 import HeroesAverage from './components/heroesAverage';
 import Statistics from './components/statistics';
 import StandartDeviationScore from './components/standartDeviationScore';
-import StandartDeviationDuration from './components/standartDeviationDuration'
+import StandartDeviationDuration from './components/standartDeviationDuration';
+
+const { Content, Footer } = Layout;
+const { Title, Text } = Typography;
 
 const App = () => {
   const dispatch = useDispatch();

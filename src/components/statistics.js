@@ -1,7 +1,7 @@
 import { Card, Col, Row, Statistic, Typography, Collapse } from 'antd';
 
 const { Title, Text } = Typography;
-const { Panel } = Collapse;
+// const { Panel } = Collapse; // Panel will no longer be used directly
 
 const Statistics = ({ statistics }) => {
   const convertSecondsToTime = (seconds) => {
@@ -41,6 +41,35 @@ const Statistics = ({ statistics }) => {
     return 'N/A';
   }
 
+
+  const advancedStatsItems = [
+    {
+      key: '1',
+      label: 'Advanced Statistical Details (Duration)',
+      children: (
+        <Card title="Duration Confidence Interval & Regression">
+          <Text strong>Confidence Interval: </Text>
+          <Text>{renderConfidenceInterval(statistics?.duration?.confidenceInterval)}</Text>
+          <br />
+          <Text strong>Regression Analysis: </Text>
+          <Text>{renderRegression(statistics?.duration?.regression)}</Text>
+        </Card>
+      ),
+    },
+    {
+      key: '2',
+      label: 'Advanced Statistical Details (Score)',
+      children: (
+        <Card title="Score Confidence Interval & Regression">
+          <Text strong>Confidence Interval: </Text>
+          <Text>{renderConfidenceInterval(statistics?.score?.confidenceInterval)}</Text>
+          <br />
+          <Text strong>Regression Analysis: </Text>
+          <Text>{renderRegression(statistics?.score?.regression)}</Text>
+        </Card>
+      ),
+    },
+  ];
 
   return (
     <div style={{ padding: '20px' }}>
@@ -139,30 +168,7 @@ const Statistics = ({ statistics }) => {
           </Card>
         </Col>
       </Row>
-      <Collapse style={{ marginTop: '20px' }}>
-        <Panel header="Advanced Statistical Details" key="1">
-          <Row gutter={[16,16]}>
-            <Col xs={24} md={12}>
-              <Card title="Duration">
-                <Text strong>Confidence Interval: </Text>
-                <Text>{renderConfidenceInterval(statistics?.duration?.confidenceInterval)}</Text>
-                <br />
-                <Text strong>Regression Analysis: </Text>
-                <Text>{renderRegression(statistics?.duration?.regression)}</Text>
-              </Card>
-            </Col>
-            <Col xs={24} md={12}>
-              <Card title="Score">
-                <Text strong>Confidence Interval: </Text>
-                <Text>{renderConfidenceInterval(statistics?.score?.confidenceInterval)}</Text>
-                <br />
-                <Text strong>Regression Analysis: </Text>
-                <Text>{renderRegression(statistics?.score?.regression)}</Text>
-              </Card>
-            </Col>
-          </Row>
-        </Panel>
-      </Collapse>
+      <Collapse items={advancedStatsItems} style={{ marginTop: '20px' }} />
     </div>
   );
 };
