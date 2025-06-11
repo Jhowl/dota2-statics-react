@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // const urlBase = 'http://localhost:3001/matches';
-const urlBase = 'http://api.jhowl.com/matches';
+const urlBase = 'https://api.jhowl.com/matches';
 
 //Create new function to get matches from urlBase add filters to GET parameters {leaguesIds = [], teamsIds = [], heroesIds = [], patchFilter = []}
 
